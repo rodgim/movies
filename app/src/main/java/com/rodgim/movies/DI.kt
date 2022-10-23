@@ -13,9 +13,13 @@ import com.rodgim.movies.framework.database.MovieDatabase
 import com.rodgim.movies.framework.database.RoomDataSource
 import com.rodgim.movies.framework.server.RetrofitModule
 import com.rodgim.movies.framework.server.ServerMovieDataSource
+import com.rodgim.movies.ui.detail.DetailActivity
+import com.rodgim.movies.ui.detail.DetailViewModel
 import com.rodgim.movies.ui.main.MainActivity
 import com.rodgim.movies.ui.main.MainViewModel
+import com.rodgim.usecases.FindMovieById
 import com.rodgim.usecases.GetPopularMovies
+import com.rodgim.usecases.ToggleMovieFavorite
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidApplication
@@ -59,5 +63,10 @@ private val scopesModule = module {
     scope(named<MainActivity>()) {
         viewModel{ MainViewModel(get(), get())}
         scoped { GetPopularMovies(get()) }
+    }
+    scope(named<DetailActivity>()) {
+        viewModel{ (id: Int) -> DetailViewModel(id, get(), get(), get()) }
+        scoped { FindMovieById(get()) }
+        scoped { ToggleMovieFavorite(get()) }
     }
 }

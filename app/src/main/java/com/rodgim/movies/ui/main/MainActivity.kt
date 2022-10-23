@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.rodgim.movies.databinding.ActivityMainBinding
 import com.rodgim.movies.ui.common.PermissionRequester
 import com.rodgim.movies.ui.common.startActivity
+import com.rodgim.movies.ui.detail.DetailActivity
 import com.rodgim.movies.ui.main.MainViewModel.UiModel
 import org.koin.androidx.scope.ScopeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,7 +34,9 @@ class MainActivity : ScopeActivity() {
         when (model) {
             is UiModel.Content -> adapter.movies = model.movies
             is UiModel.Navigation -> {
-                // Go to Detail}
+                startActivity<DetailActivity> {
+                    putExtra(DetailActivity.MOVIE, model.movie.id)
+                }
             }
             is UiModel.RequestLocationPermission -> coarsePermissionRequester.request {
                 viewModel.onCoarsePermissionRequested()
