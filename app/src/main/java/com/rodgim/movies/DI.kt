@@ -43,14 +43,14 @@ fun Application.initDI() {
 }
 
 private val appModule = module {
-    single(named("apiKey")) { BuildConfig.API_KEY}
+    single(named("apiKey")) { BuildConfig.TMDB_API_KEY}
     single{ MovieDatabase.build(get())}
     factory<LocalDataSource> { RoomDataSource(get()) }
     factory<RemoteDataSource> { ServerMovieDataSource(get()) }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
-    single(named("baseUrl")) { BuildConfig.BASE_URL }
+    single(named("baseUrl")) { BuildConfig.TMDB_BASE_URL }
     single { RetrofitModule(get(named("baseUrl"))) }
 }
 
