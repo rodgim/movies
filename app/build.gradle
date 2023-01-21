@@ -17,8 +17,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_URL", "$base_url"
-        buildConfigField "String", "API_KEY", "$api_key"
+        buildConfigField "String", "TMDB_BASE_URL", "$tmdb_base_url"
+        buildConfigField "String", "TMDB_API_KEY", "$tmdb_api_key"
+        buildConfigField "String", "TMDB_IMAGE_BASE_URL", "$tmdb_image_base_url"
+        buildConfigField "String", "TMDB_IMAGE_342", "$tmdb_image_342"
+        buildConfigField "String", "YOUTUBE_VIDEO_URL", "$youtube_video_url"
+        buildConfigField "String", "YOUTUBE_THUMBNAIL_URL", "$youtube_thumbnail_url"
     }
 
     buildTypes {
