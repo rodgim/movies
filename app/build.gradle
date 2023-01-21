@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'com.rodgim.movies'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.rodgim.movies"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -55,15 +55,23 @@ dependencies {
     implementation project(':data')
     implementation project(':domain')
     implementation project(':usecases')
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.activity:activity-ktx:1.6.1'
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
     // Services
-    implementation 'com.google.android.gms:play-services-location:20.0.0'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
@@ -72,9 +80,15 @@ dependencies {
     // Dexter
     implementation 'com.karumi:dexter:6.2.2'
 
+    // Auto image slider
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+
+    // Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     // Room
-    implementation 'androidx.room:room-runtime:2.4.3'
-    kapt 'androidx.room:room-compiler:2.4.3'
+    implementation 'androidx.room:room-runtime:2.5.0'
+    kapt 'androidx.room:room-compiler:2.5.0'
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
@@ -103,4 +117,5 @@ dependencies {
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.9.0'
     androidTestImplementation 'com.jakewharton.espresso:okhttp3-idling-resource:1.0.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.navigation:navigation-testing:2.5.3'
 }
