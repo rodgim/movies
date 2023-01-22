@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Movies</string>
+    <string name="empty_text">Field are empty</string>
+    <string name="appwidget_text">Your favorite movies banner</string>
+    <string name="search">Search</string>
+    <string name="tmdb_logo">TMDB Logo</string>
+    <string name="movies_tab">Movies</string>
+    <string name="tv_shows_tab">TV Shows</string>
+    <string name="favorite_tab">Favorite</string>
+    <string name="setting_tab">Setting</string>
 </resources>

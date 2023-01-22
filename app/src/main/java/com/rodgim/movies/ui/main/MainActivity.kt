@@ -1,47 +1,120 @@
 package com.rodgim.movies.ui.main
 
-import android.Manifest
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import android.view.View
-import androidx.lifecycle.Observer
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MenuItem.OnActionExpandListener
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.GravityCompat
+import androidx.customview.widget.Openable
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+import com.rodgim.movies.R
 import com.rodgim.movies.databinding.ActivityMainBinding
-import com.rodgim.movies.ui.common.PermissionRequester
-import com.rodgim.movies.ui.common.startActivity
-import com.rodgim.movies.ui.detail.DetailActivity
-import com.rodgim.movies.ui.main.MainViewModel.UiModel
 import org.koin.androidx.scope.ScopeActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ScopeActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: MoviesAdapter
-    private val coarsePermissionRequester = PermissionRequester(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-    private val viewModel: MainViewModel by viewModel()
+
+    private lateinit var appBarConfig: AppBarConfiguration
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = MoviesAdapter(viewModel::onMovieClicked)
-        binding.recycler.adapter = adapter
-        viewModel.model.observe(this, Observer(::updateUi))
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_fragment_container)
+        navHostFragment?.let {
+            navController = it.findNavController()
+            setupWithNavController(binding.navigationView, navController)
+        }
+
+        appBarConfig = AppBarConfiguration.Builder(
+            R.id.menu_movie, R.id.menu_tv_show, R.id.menu_favorite
+        ).setOpenableLayout(openable)
+            .build()
+        onBackPressedListener()
     }
 
-    private fun updateUi(model: UiModel) {
-        binding.progress.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE
-
-        when (model) {
-            is UiModel.Content -> adapter.movies = model.movies
-            is UiModel.Navigation -> {
-                startActivity<DetailActivity> {
-                    putExtra(DetailActivity.MOVIE, model.movie.id)
-                }
-            }
-            is UiModel.RequestLocationPermission -> coarsePermissionRequester.request {
-                viewModel.onCoarsePermissionRequested()
-            }
-            else -> {}
+    private val openable: Openable = object : Openable {
+        override fun isOpen(): Boolean {
+            return binding.mainDrawerLayout.isDrawerOpen(GravityCompat.START)
         }
+
+        override fun open() {
+            binding.mainDrawerLayout.openDrawer(GravityCompat.START)
+        }
+
+        override fun close() {
+            binding.mainDrawerLayout.closeDrawers()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu?.findItem(R.id.search)?.actionView as SearchView?
+        searchView?.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView?.queryHint = "Find something here.."
+
+        searchView?.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // TODO
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.search) {
+            item.setOnActionExpandListener(object : OnActionExpandListener {
+                override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                    // TODO
+                    return true
+                }
+
+                override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    onSupportNavigateUp()
+                    return true
+                }
+            })
+            return true
+        }
+        return false
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_fragment_container)
+        return NavigationUI.navigateUp(navController, appBarConfig) || super.onSupportNavigateUp()
+    }
+
+    private fun onBackPressedListener() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.mainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    binding.mainDrawerLayout.closeDrawers()
+                    return
+                }
+                finish()
+            }
+        })
     }
 }

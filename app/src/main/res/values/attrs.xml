@@ -3,4 +3,9 @@
     <declare-styleable name="AspectRatioImageView">
         <attr name="ratio" format="float"/>
     </declare-styleable>
+
+    <attr name="colorNavigationItem" format="color"/>
+    <attr name="colorNavigationItemSelected" format="color"/>
+
+    <attr name="drawableNavigationItemBackground" format="reference"/>
 </resources>

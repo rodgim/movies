@@ -15,6 +15,7 @@ import com.rodgim.movies.framework.server.RetrofitModule
 import com.rodgim.movies.framework.server.ServerMovieDataSource
 import com.rodgim.movies.ui.detail.DetailActivity
 import com.rodgim.movies.ui.detail.DetailViewModel
+import com.rodgim.movies.ui.home.MoviesFragment
 import com.rodgim.movies.ui.main.MainActivity
 import com.rodgim.movies.ui.main.MainViewModel
 import com.rodgim.usecases.FindMovieById
@@ -60,13 +61,13 @@ val dataModule = module {
 }
 
 private val scopesModule = module {
-    scope(named<MainActivity>()) {
-        viewModel{ MainViewModel(get(), get())}
-        scoped { GetPopularMovies(get()) }
-    }
     scope(named<DetailActivity>()) {
         viewModel{ (id: Int) -> DetailViewModel(id, get(), get(), get()) }
         scoped { FindMovieById(get()) }
         scoped { ToggleMovieFavorite(get()) }
+    }
+    scope(named<MoviesFragment>()) {
+        viewModel { MainViewModel(get(), get()) }
+        scoped { GetPopularMovies(get()) }
     }
 }
