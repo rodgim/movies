@@ -16,14 +16,12 @@ import com.rodgim.movies.framework.server.ServerMovieDataSource
 import com.rodgim.movies.ui.detail.DetailActivity
 import com.rodgim.movies.ui.detail.DetailViewModel
 import com.rodgim.movies.ui.home.MoviesFragment
-import com.rodgim.movies.ui.main.MainActivity
-import com.rodgim.movies.ui.main.MainViewModel
+import com.rodgim.movies.ui.home.MoviesViewModel
 import com.rodgim.usecases.FindMovieById
 import com.rodgim.usecases.GetPopularMovies
 import com.rodgim.usecases.ToggleMovieFavorite
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -67,7 +65,7 @@ private val scopesModule = module {
         scoped { ToggleMovieFavorite(get()) }
     }
     scope(named<MoviesFragment>()) {
-        viewModel { MainViewModel(get(), get()) }
+        viewModel { MoviesViewModel(get(), get()) }
         scoped { GetPopularMovies(get()) }
     }
 }

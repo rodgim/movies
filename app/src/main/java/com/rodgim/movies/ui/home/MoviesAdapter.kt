@@ -1,7 +1,8 @@
-package com.rodgim.movies.ui.main
+package com.rodgim.movies.ui.home
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.rodgim.domain.Movie
 import com.rodgim.movies.R
@@ -10,7 +11,7 @@ import com.rodgim.movies.ui.common.basicDiffUtil
 import com.rodgim.movies.ui.common.inflate
 import com.rodgim.movies.ui.common.loadUrl
 
-class MoviesAdapter(private val listener: (Movie) -> Unit) :
+class MoviesAdapter(private val listener: (Movie, ImageView) -> Unit) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     var movies: List<Movie> by basicDiffUtil(
@@ -27,14 +28,17 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movies[position]
         holder.bind(movie)
-        holder.itemView.setOnClickListener { listener(movie) }
+        holder.itemView.setOnClickListener {
+            listener(movie, holder.getMovieCover())
+        }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ViewMovieBinding.bind(view)
         fun bind(movie: Movie) = with(binding) {
             movieTitle.text = movie.title
-            movieCover.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
+            movieCover.loadUrl(movie.getFullPosterPath())
         }
+        fun getMovieCover() = binding.movieCover
     }
 }

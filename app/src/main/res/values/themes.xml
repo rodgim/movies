@@ -18,6 +18,8 @@
         <item name="colorNavigationItemSelected">@color/white</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowActivityTransitions">true</item>
     </style>
 
     <style name="Theme.DarkOverlay" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>

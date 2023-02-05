@@ -8,4 +8,7 @@
     <string name="tv_shows_tab">TV Shows</string>
     <string name="favorite_tab">Favorite</string>
     <string name="setting_tab">Setting</string>
+
+    <!-- Animations -->
+    <string name="transition_poster">posterTransition</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.rodgim.movies.ui.main
+package com.rodgim.movies.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.rodgim.usecases.GetPopularMovies
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class MainViewModel(
+class MoviesViewModel(
     private val getPopularMovies: GetPopularMovies,
     uiDispatcher: CoroutineDispatcher
 ) : ScopedViewModel(uiDispatcher) {

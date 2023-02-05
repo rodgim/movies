@@ -3,6 +3,8 @@ package com.rodgim.movies.ui.common
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,11 @@ import androidx.lifecycle.get
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BaseTarget
+import com.bumptech.glide.request.target.ImageViewTarget
+import com.bumptech.glide.request.target.SizeReadyCallback
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.rodgim.movies.MoviesApp
 import kotlin.properties.Delegates
 
@@ -27,11 +34,39 @@ fun ImageView.loadUrl(url: String) {
         .into(this)
 }
 
+fun ImageView.loadUrlAndPostponeEnterTransition(url: String, activity: FragmentActivity) {
+    val target: Target<Drawable> = ImageViewBaseTarget(this, activity)
+    Glide.with(context.applicationContext).load(url).into(target)
+}
+
+private class ImageViewBaseTarget (var imageView: ImageView?, var activity: FragmentActivity?) : BaseTarget<Drawable>() {
+    override fun onLoadFailed(errorDrawable: Drawable?) {
+        super.onLoadFailed(errorDrawable)
+        activity?.supportStartPostponedEnterTransition()
+    }
+
+    override fun getSize(cb: SizeReadyCallback) = cb.onSizeReady(SIZE_ORIGINAL, SIZE_ORIGINAL)
+
+    override fun removeCallback(cb: SizeReadyCallback) {
+        imageView = null
+        activity = null
+    }
+
+    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+        imageView?.setImageDrawable(resource)
+        activity?.supportStartPostponedEnterTransition()
+    }
+}
+
+fun View.cancelTransition() {
+    transitionName = null
+}
+
 inline fun <reified T: Activity> Context.intentFor(body: Intent.() -> Unit): Intent =
     Intent(this, T::class.java).apply(body)
 
-inline fun <reified T: Activity> Context.startActivity(body: Intent.() -> Unit) {
-    startActivity(intentFor<T>(body))
+inline fun <reified T: Activity> Context.startActivity(transitionBundle: Bundle? = null, body: Intent.() -> Unit) {
+    startActivity(intentFor<T>(body), transitionBundle)
 }
 
 inline fun <VH: RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffUtil(
