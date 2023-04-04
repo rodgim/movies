@@ -17,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.rodgim.movies.R
 import com.rodgim.movies.databinding.ActivityMainBinding
 import org.koin.androidx.scope.ScopeActivity
@@ -41,10 +43,14 @@ class MainActivity : ScopeActivity() {
             setupWithNavController(binding.navigationView, navController)
         }
 
-        appBarConfig = AppBarConfiguration.Builder(
-            R.id.menu_movie, R.id.menu_tv_show, R.id.menu_favorite
-        ).setOpenableLayout(openable)
-            .build()
+        appBarConfig = AppBarConfiguration(
+            topLevelDestinationIds = setOf(
+                R.id.menu_movie, R.id.menu_tv_show, R.id.menu_favorite
+            ),
+            drawerLayout = openable
+        )
+
+        setupActionBarWithNavController(navController, appBarConfig)
         onBackPressedListener()
     }
 
