@@ -2,7 +2,7 @@ package com.rodgim.data.repository
 
 import com.rodgim.data.source.LocalDataSource
 import com.rodgim.data.source.RemoteDataSource
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 
 class MoviesRepository(
     private val localDataSource: LocalDataSource,

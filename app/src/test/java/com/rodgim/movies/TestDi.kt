@@ -4,7 +4,7 @@ import com.rodgim.data.repository.PermissionChecker
 import com.rodgim.data.source.LocalDataSource
 import com.rodgim.data.source.LocationDataSource
 import com.rodgim.data.source.RemoteDataSource
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module

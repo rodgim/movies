@@ -2,7 +2,7 @@ package com.rodgim.movies.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 import com.rodgim.movies.ui.common.ScopedViewModel
 import com.rodgim.usecases.GetPopularMovies
 import kotlinx.coroutines.CoroutineDispatcher

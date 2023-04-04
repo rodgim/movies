@@ -1,6 +1,6 @@
 package com.rodgim.movies.framework
 
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 import com.rodgim.movies.framework.database.Movie as DbMovie
 import com.rodgim.movies.framework.server.Movie as ServerMovie
 

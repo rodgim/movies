@@ -1,7 +1,7 @@
 package com.rodgim.movies.framework.database
 
 import com.rodgim.data.source.LocalDataSource
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 import com.rodgim.movies.framework.toDomainMovie
 import com.rodgim.movies.framework.toRoomMovie
 import kotlinx.coroutines.Dispatchers

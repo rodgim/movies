@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 import com.rodgim.movies.databinding.FragmentMoviesBinding
 import com.rodgim.movies.ui.common.PermissionRequester
 import com.rodgim.movies.ui.common.startActivity

@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 import com.rodgim.movies.R
 import com.rodgim.movies.databinding.ViewMovieBinding
 import com.rodgim.movies.ui.common.basicDiffUtil

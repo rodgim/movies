@@ -2,7 +2,7 @@ package com.rodgim.movies.ui.detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 import com.rodgim.movies.ui.common.ScopedViewModel
 import com.rodgim.usecases.FindMovieById
 import com.rodgim.usecases.ToggleMovieFavorite

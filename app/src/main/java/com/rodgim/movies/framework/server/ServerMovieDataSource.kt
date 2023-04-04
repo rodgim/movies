@@ -1,7 +1,7 @@
 package com.rodgim.movies.framework.server
 
 import com.rodgim.data.source.RemoteDataSource
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 import com.rodgim.movies.framework.toDomainMovie
 
 class ServerMovieDataSource(private val retrofit: RetrofitModule) : RemoteDataSource{

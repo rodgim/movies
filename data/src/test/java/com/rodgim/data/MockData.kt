@@ -1,6 +1,6 @@
 package com.rodgim.data
 
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 
 val mockedMovie = Movie(
     0,

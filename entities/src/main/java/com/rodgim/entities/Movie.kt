@@ -1,4 +1,4 @@
-package com.rodgim.domain
+package com.rodgim.entities
 
 data class Movie(
     val id: Int,
@@ -12,4 +12,9 @@ data class Movie(
     val popularity: Double,
     val voteAverage: Double,
     val favorite: Boolean
-)
+) {
+
+    fun getFullPosterPath(width: Int = 185): String = "https://image.tmdb.org/t/p/w$width/${this.posterPath}"
+
+    fun getFullBackdropPath(width: Int = 780): String = "https://image.tmdb.org/t/p/w$width${this.backdropPath}"
+}

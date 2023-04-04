@@ -1,6 +1,6 @@
 package com.rodgim.data.source
 
-import com.rodgim.domain.Movie
+import com.rodgim.entities.Movie
 
 interface RemoteDataSource {
     suspend fun getPopularMovies(apikey: String, region: String): List<Movie>
