@@ -3,8 +3,8 @@ package com.rodgim.movies.framework.database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
-data class Movie(
+@Entity(tableName = "favorite_movie")
+data class FavoriteMovie(
     @PrimaryKey val id: Int,
     val title: String,
     val overview: String,
@@ -15,5 +15,4 @@ data class Movie(
     val originalTitle: String,
     val popularity: Double,
     val voteAverage: Double,
-    val category: String
 )

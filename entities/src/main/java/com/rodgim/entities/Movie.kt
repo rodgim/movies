@@ -10,8 +10,7 @@ data class Movie(
     val originalLanguage: String,
     val originalTitle: String,
     val popularity: Double,
-    val voteAverage: Double,
-    val favorite: Boolean
+    val voteAverage: Double
 ) {
 
     fun getFullPosterPath(width: Int = 185): String = "https://image.tmdb.org/t/p/w$width/${this.posterPath}"

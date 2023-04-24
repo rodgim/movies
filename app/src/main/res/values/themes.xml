@@ -37,4 +37,9 @@
         <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
     </style>
 
+    <style name="RoundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
 </resources>

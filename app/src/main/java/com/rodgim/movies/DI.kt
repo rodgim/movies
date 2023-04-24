@@ -17,7 +17,9 @@ import com.rodgim.movies.ui.detail.DetailActivity
 import com.rodgim.movies.ui.detail.DetailViewModel
 import com.rodgim.movies.ui.home.MoviesFragment
 import com.rodgim.movies.ui.home.MoviesViewModel
+import com.rodgim.usecases.CheckIfMovieIsFavorite
 import com.rodgim.usecases.FindMovieById
+import com.rodgim.usecases.GetMoviesFromCategory
 import com.rodgim.usecases.GetPopularMovies
 import com.rodgim.usecases.ToggleMovieFavorite
 import kotlinx.coroutines.CoroutineDispatcher
@@ -60,12 +62,14 @@ val dataModule = module {
 
 private val scopesModule = module {
     scope(named<DetailActivity>()) {
-        viewModel{ (id: Int) -> DetailViewModel(id, get(), get(), get()) }
+        viewModel{ (id: Int) -> DetailViewModel(id, get(), get(), get(), get()) }
         scoped { FindMovieById(get()) }
         scoped { ToggleMovieFavorite(get()) }
+        scoped { CheckIfMovieIsFavorite(get()) }
     }
     scope(named<MoviesFragment>()) {
-        viewModel { MoviesViewModel(get(), get()) }
+        viewModel { MoviesViewModel(get(), get(), get()) }
         scoped { GetPopularMovies(get()) }
+        scoped { GetMoviesFromCategory(get()) }
     }
 }

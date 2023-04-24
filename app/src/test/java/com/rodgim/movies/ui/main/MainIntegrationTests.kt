@@ -8,6 +8,7 @@ import com.rodgim.movies.FakeLocalDataSource
 import com.rodgim.movies.defaultFakeMovies
 import com.rodgim.movies.initMockedDi
 import com.rodgim.movies.mockedMovie
+import com.rodgim.movies.ui.home.MoviesViewModel
 import com.rodgim.usecases.GetPopularMovies
 import org.junit.Before
 import org.junit.Rule
@@ -26,14 +27,14 @@ class MainIntegrationTests : AutoCloseKoinTest() {
     val rule = InstantTaskExecutorRule()
 
     @Mock
-    lateinit var observer: Observer<MainViewModel.UiModel>
+    lateinit var observer: Observer<MoviesViewModel.UiModel>
 
-    private lateinit var vm: MainViewModel
+    private lateinit var vm: MoviesViewModel
 
     @Before
     fun setUp() {
         val vmModule = module {
-            factory { MainViewModel(get(), get()) }
+            factory { MoviesViewModel(get(), get()) }
             factory { GetPopularMovies(get()) }
         }
 
@@ -47,7 +48,7 @@ class MainIntegrationTests : AutoCloseKoinTest() {
 
         vm.onCoarsePermissionRequested()
 
-        verify(observer).onChanged(MainViewModel.UiModel.Content(defaultFakeMovies))
+        verify(observer).onChanged(MoviesViewModel.UiModel.Content(defaultFakeMovies))
     }
 
     @Test
@@ -59,6 +60,6 @@ class MainIntegrationTests : AutoCloseKoinTest() {
 
         vm.onCoarsePermissionRequested()
 
-        verify(observer).onChanged(MainViewModel.UiModel.Content(fakeLocalMovies))
+        verify(observer).onChanged(MoviesViewModel.UiModel.Content(fakeLocalMovies))
     }
 }

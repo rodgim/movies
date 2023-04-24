@@ -53,8 +53,9 @@ class DetailActivity : ScopeActivity() {
         movieDetailSummary.text = movie.overview
         movieDetailInfo.setMovie(movie)
 
-        val icon = if (movie.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+        val icon = if (model.isFavorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
         movieDetailFavorite.setImageDrawable(ContextCompat.getDrawable(this@DetailActivity, icon))
+
         movieDetailsAnimator.fadeVisible(scrollView, movieDetails)
         movieDetailsAnimator.scaleUpView(movieDetailFavorite)
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.rodgim.movies.mockedMovie
+import com.rodgim.movies.ui.home.MoviesViewModel
 import com.rodgim.usecases.GetPopularMovies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -25,20 +26,20 @@ class MainViewModelTest {
     lateinit var getPopularMovies: GetPopularMovies
 
     @Mock
-    lateinit var observer: Observer<MainViewModel.UiModel>
+    lateinit var observer: Observer<MoviesViewModel.UiModel>
 
-    private lateinit var vm: MainViewModel
+    private lateinit var vm: MoviesViewModel
 
     @Before
     fun setUp() {
-        vm = MainViewModel(getPopularMovies, Dispatchers.Unconfined)
+        vm = MoviesViewModel(getPopularMovies, Dispatchers.Unconfined)
     }
 
     @Test
     fun `observing LiveData launches location permission request`() {
         vm.model.observeForever(observer)
 
-        verify(observer).onChanged(MainViewModel.UiModel.RequestLocationPermission)
+        verify(observer).onChanged(MoviesViewModel.UiModel.RequestLocationPermission)
     }
 
     @Test
@@ -50,7 +51,7 @@ class MainViewModelTest {
 
             vm.onCoarsePermissionRequested()
 
-            verify(observer).onChanged(MainViewModel.UiModel.Loading)
+            verify(observer).onChanged(MoviesViewModel.UiModel.Loading)
         }
     }
 
@@ -64,7 +65,7 @@ class MainViewModelTest {
 
             vm.onCoarsePermissionRequested()
 
-            verify(observer).onChanged(MainViewModel.UiModel.Content(movies))
+            verify(observer).onChanged(MoviesViewModel.UiModel.Content(movies))
         }
     }
 }

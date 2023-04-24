@@ -11,4 +11,8 @@
 
     <!-- Animations -->
     <string name="transition_poster">posterTransition</string>
+    <string name="popular">Popular</string>
+    <string name="poster">Poster</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="now_playing">Now Playing</string>
 </resources>

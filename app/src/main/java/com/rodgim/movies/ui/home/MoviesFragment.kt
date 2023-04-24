@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.rodgim.entities.Movie
 import com.rodgim.movies.databinding.FragmentMoviesBinding
 import com.rodgim.movies.ui.common.PermissionRequester
@@ -24,11 +25,15 @@ class MoviesFragment : ScopeFragment() {
             "Cannot access binding because is null"
         }
 
-    private lateinit var adapter: MoviesAdapter
     private val coarsePermissionRequester: PermissionRequester by lazy {
         PermissionRequester(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
     }
+
     private val viewModel: MoviesViewModel by viewModel()
+    private lateinit var popularAdapter: MoviesHorizontalAdapter
+    private lateinit var nowPlayingAdapter: MoviesHorizontalAdapter
+    private lateinit var topRatedAdapter: MoviesHorizontalAdapter
+
     private lateinit var movieViewClicked: ImageView
 
     override fun onCreateView(
@@ -42,9 +47,21 @@ class MoviesFragment : ScopeFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MoviesAdapter(::movieClicked)
-        binding.recycler.adapter = adapter
+        setupRecyclerViews()
         viewModel.model.observe(viewLifecycleOwner, Observer(::updateUi))
+    }
+
+    private fun setupRecyclerViews() {
+        binding.apply {
+            popularAdapter = MoviesHorizontalAdapter(::movieClicked)
+            rvPopular.adapter = popularAdapter
+
+            nowPlayingAdapter = MoviesHorizontalAdapter(::movieClicked)
+            rvNowPlaying.adapter = nowPlayingAdapter
+
+            topRatedAdapter = MoviesHorizontalAdapter(::movieClicked)
+            rvTopRated.adapter = topRatedAdapter
+        }
     }
 
     private fun movieClicked(movie: Movie, view: ImageView) {
@@ -53,10 +70,20 @@ class MoviesFragment : ScopeFragment() {
     }
 
     private fun updateUi(model: MoviesViewModel.UiModel) {
-        binding.progress.visibility = if (model is MoviesViewModel.UiModel.Loading) View.VISIBLE else View.GONE
-
         when (model) {
-            is MoviesViewModel.UiModel.Content -> adapter.movies = model.movies
+            is MoviesViewModel.UiModel.Loading -> {
+                binding.popularShimmerContainer.startShimmer()
+                binding.nowPlayingShimmerContainer.startShimmer()
+                binding.topRatedShimmerContainer.startShimmer()
+            }
+            is MoviesViewModel.UiModel.Content -> {
+                popularAdapter.submitList(model.popular)
+                nowPlayingAdapter.submitList(model.nowPlaying)
+                topRatedAdapter.submitList(model.topRated)
+                hideShimmer(binding.popularShimmerContainer)
+                hideShimmer(binding.nowPlayingShimmerContainer)
+                hideShimmer(binding.topRatedShimmerContainer)
+            }
             is MoviesViewModel.UiModel.Navigation -> {
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     requireActivity(), movieViewClicked, movieViewClicked.transitionName
@@ -68,7 +95,11 @@ class MoviesFragment : ScopeFragment() {
             is MoviesViewModel.UiModel.RequestLocationPermission -> coarsePermissionRequester.request {
                 viewModel.onCoarsePermissionRequested()
             }
-            else -> {}
         }
+    }
+
+    private fun hideShimmer(container: ShimmerFrameLayout) {
+        container.hideShimmer()
+        container.visibility = View.GONE
     }
 }

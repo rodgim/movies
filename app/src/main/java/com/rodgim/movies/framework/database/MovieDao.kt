@@ -18,6 +18,12 @@ interface MovieDao {
     @Query("SELECT COUNT(id) FROM Movie")
     fun movieCount(): Int
 
+    @Query("SELECT * FROM Movie WHERE category = :category")
+    fun getMoviesFromCategory(category: String): List<Movie>
+
+    @Query("SELECT COUNT(id) FROM Movie WHERE category = :category")
+    fun categoryMoviesCount(category: String): Int
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMovies(movies: List<Movie>)
 
