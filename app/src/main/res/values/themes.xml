@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Movies" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Movies" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
@@ -17,7 +17,6 @@
         <item name="colorNavigationItem">@color/menu_item_color_state</item>
         <item name="colorNavigationItemSelected">@color/white</item>
         <item name="android:windowTranslucentStatus">false</item>
-        <item name="drawableNavigationItemBackground">@drawable/menu_background_color_state</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowActivityTransitions">true</item>
     </style>
@@ -31,15 +30,19 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
-    <style name="Widget.Custom.NavigationView" parent="Widget.Design.NavigationView">
+    <style name="Widget.Custom.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="itemIconTint">?attr/colorNavigationItem</item>
-        <item name="itemTextColor">?attr/colorNavigationItem</item>
-        <item name="itemBackground">?attr/drawableNavigationItemBackground</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="itemActiveIndicatorStyle">@style/Custom.Indicator</item>
     </style>
 
     <style name="RoundedImageView">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primaryLightColor</item>
     </style>
 
 </resources>

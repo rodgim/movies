@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/menu_movie"
-            android:icon="@drawable/ic_movie"
-            android:title="@string/movies_tab"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_movie"
+        android:icon="@drawable/ic_movie"
+        android:title="@string/movies_tab"/>
 
-        <item
-            android:id="@+id/menu_tv_show"
-            android:icon="@drawable/ic_tv_show"
-            android:title="@string/tv_shows_tab"/>
+    <item
+        android:id="@+id/menu_favorite"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/favorite_tab"/>
 
-        <item
-            android:id="@+id/menu_favorite"
-            android:icon="@drawable/ic_favorite"
-            android:title="@string/favorite_tab"/>
-
-        <item
-            android:id="@+id/menu_setting"
-            android:icon="@drawable/ic_setting"
-            android:title="@string/setting_tab"/>
-    </group>
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_search_light"
+        app:iconTint="@color/white"
+        android:title="@string/search_tab"/>
 </menu>
