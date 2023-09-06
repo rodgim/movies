@@ -1,6 +1,7 @@
 package com.rodgim.movies
 
 import android.app.Application
+import com.google.gson.GsonBuilder
 import com.rodgim.data.repository.MoviesRepository
 import com.rodgim.data.repository.PermissionChecker
 import com.rodgim.data.repository.RegionRepository
@@ -20,7 +21,6 @@ import com.rodgim.movies.ui.home.MoviesViewModel
 import com.rodgim.usecases.CheckIfMovieIsFavorite
 import com.rodgim.usecases.FindMovieById
 import com.rodgim.usecases.GetMoviesFromCategory
-import com.rodgim.usecases.GetPopularMovies
 import com.rodgim.usecases.ToggleMovieFavorite
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +38,8 @@ fun Application.initDI() {
         modules(listOf(
             appModule,
             dataModule,
-            scopesModule
+            scopesModule,
+            gsonModule
         ))
     }
 }
@@ -68,8 +69,14 @@ private val scopesModule = module {
         scoped { CheckIfMovieIsFavorite(get()) }
     }
     scope(named<MoviesFragment>()) {
-        viewModel { MoviesViewModel(get(), get(), get()) }
-        scoped { GetPopularMovies(get()) }
+        viewModel { MoviesViewModel(get(), get()) }
         scoped { GetMoviesFromCategory(get()) }
+    }
+}
+
+private val gsonModule = module {
+    single {
+        val gsonBuilder = GsonBuilder()
+        gsonBuilder.create()
     }
 }

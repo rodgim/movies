@@ -2,6 +2,7 @@ package com.rodgim.movies.framework.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.rodgim.entities.Genre
 
 @Entity
 data class Movie(
@@ -15,5 +16,7 @@ data class Movie(
     val originalTitle: String,
     val popularity: Double,
     val voteAverage: Double,
-    val category: String
+    val isFavorite: Boolean = false,
+    val genres: List<Genre>? = null,
+    val duration: Int? = null
 )

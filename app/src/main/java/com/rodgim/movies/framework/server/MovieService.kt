@@ -9,12 +9,13 @@ interface MovieService {
     suspend fun getMoviesFromCategory(
         @Path("category") category: String,
         @Query("page") page: Int = 1,
+        @Query("region") region: String,
         @Query("api_key") apiKey: String
     ): MovieResult
 
-    @GET("discover/movie?sort_by=popularity.desc")
-    suspend fun listPopularMovies(
-        @Query("api_key") apiKey: String,
-        @Query("region") region: String
-    ): MovieResult
+    @GET("movie/{movieId}")
+    suspend fun getMovieDetail(
+        @Path("movieId") movieId: String,
+        @Query("api_key") apiKey: String
+    ): Movie
 }

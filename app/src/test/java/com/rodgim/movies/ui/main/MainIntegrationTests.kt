@@ -9,7 +9,6 @@ import com.rodgim.movies.defaultFakeMovies
 import com.rodgim.movies.initMockedDi
 import com.rodgim.movies.mockedMovie
 import com.rodgim.movies.ui.home.MoviesViewModel
-import com.rodgim.usecases.GetPopularMovies
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

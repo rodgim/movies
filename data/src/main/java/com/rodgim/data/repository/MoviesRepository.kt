@@ -13,18 +13,10 @@ class MoviesRepository(
 
     suspend fun getMoviesFromCategory(category: String): List<Movie> {
         if (localDataSource.isCategoryEmpty(category)) {
-            val movies = remoteDataSource.getMoviesFromCategory(category, apiKey)
+            val movies = remoteDataSource.getMoviesFromCategory(category, regionRepository.findLastRegion(), apiKey)
             localDataSource.saveMovies(movies, category)
         }
         return localDataSource.getMoviesFromCategory(category)
-    }
-
-    suspend fun getPopularMovies(): List<Movie> {
-        if (localDataSource.isEmpty()) {
-            val movies = remoteDataSource.getPopularMovies(apiKey, regionRepository.findLastRegion())
-            localDataSource.saveMovies(movies)
-        }
-        return localDataSource.getPopularMovies()
     }
 
     suspend fun findMovieById(id: Int): Movie = localDataSource.findMovieById(id)
@@ -33,9 +25,7 @@ class MoviesRepository(
 
     suspend fun getFavoriteMovies() = localDataSource.getFavoriteMovies()
 
-    suspend fun insertFavoriteMovie(movie: Movie) = localDataSource.insertFavoriteMovie(movie)
-
-    suspend fun deleteFavoriteMovie(movie: Movie) = localDataSource.deleteFavoriteMovie(movie)
+    suspend fun toggleFavoriteMovie(movie: Movie) = localDataSource.toggleFavoriteMovie(movie)
 
     suspend fun isMovieFavorite(id: Int) = localDataSource.isMovieFavorite(id)
 }

@@ -6,7 +6,6 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.rodgim.movies.mockedMovie
 import com.rodgim.movies.ui.home.MoviesViewModel
-import com.rodgim.usecases.GetPopularMovies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
