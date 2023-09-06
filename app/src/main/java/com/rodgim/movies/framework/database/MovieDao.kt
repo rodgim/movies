@@ -12,7 +12,7 @@ interface MovieDao {
     fun upsertMovies(movies: List<Movie>)
 
     @Upsert
-    fun upsertMovie(movie: Movie)
+    suspend fun upsertMovie(movie: Movie)
 
     @Upsert
     fun upsertMoviesList(moviesList: List<MovieList>)
