@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rodgim.entities.Movie
 import com.rodgim.movies.ui.common.ScopedViewModel
+import com.rodgim.movies.ui.models.CategoryMovie
 import com.rodgim.usecases.GetMoviesFromCategory
-import com.rodgim.usecases.GetPopularMovies
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class MoviesViewModel(
-    private val getPopularMovies: GetPopularMovies,
     private val getMoviesFromCategory: GetMoviesFromCategory,
     uiDispatcher: CoroutineDispatcher
 ) : ScopedViewModel(uiDispatcher) {
@@ -34,9 +33,9 @@ class MoviesViewModel(
     fun onCoarsePermissionRequested() {
         launch {
             _model.value = UiModel.Loading
-            val popular = async { getMoviesFromCategory.invoke("popular") }
-            val nowPlaying = async { getMoviesFromCategory.invoke("now_playing") }
-            val topRated = async { getMoviesFromCategory.invoke("top_rated") }
+            val popular = async { getMoviesFromCategory.invoke(CategoryMovie.POPULAR.id) }
+            val nowPlaying = async { getMoviesFromCategory.invoke(CategoryMovie.NOW_PLAYING.id) }
+            val topRated = async { getMoviesFromCategory.invoke(CategoryMovie.TOP_RATED.id) }
 
             val defPopular = popular.await()
             val defNowPlaying = nowPlaying.await()
