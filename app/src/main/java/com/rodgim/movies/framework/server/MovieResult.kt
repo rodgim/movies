@@ -26,5 +26,13 @@ data class Movie(
     val title: String,
     val video: Boolean,
     @SerializedName("vote_average") val voteAverage: Double,
-    @SerializedName("vote_count") val voteCount: Int
+    @SerializedName("vote_count") val voteCount: Int,
+    @SerializedName("genres") val genres: List<Genre>? = null,
+    @SerializedName("runtime") val runtime: Int? = null
 ) : Parcelable
+
+@Parcelize
+data class Genre(
+    @SerializedName("id") val id: Int,
+    @SerializedName("name") val name: String
+): Parcelable

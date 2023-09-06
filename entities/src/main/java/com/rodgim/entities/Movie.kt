@@ -14,11 +14,4 @@ data class Movie(
     val isFavorite: Boolean,
     val duration: Int,
     val genres: List<Genre> = emptyList()
-) {
-
-    fun getFullPosterPath(width: Int = 185): String = "https://image.tmdb.org/t/p/w$width/${this.posterPath}"
-
-    fun getFullBackdropPath(width: Int = 780): String = "https://image.tmdb.org/t/p/w$width${this.backdropPath}"
-
-    fun get5StarRating(): Float = this.voteAverage.div(2).toFloat()
-}
+)

@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.rodgim.movies.R
 import com.rodgim.movies.databinding.ActivityDetailBinding
-import com.rodgim.movies.ui.common.loadUrl
 import com.rodgim.movies.ui.common.loadUrlAndPostponeEnterTransition
+import com.rodgim.movies.ui.models.get5StarRating
+import com.rodgim.movies.ui.models.getDurationDisplay
+import com.rodgim.movies.ui.models.getFullPosterPath
+import com.rodgim.movies.ui.models.getGenresDisplay
 import org.koin.androidx.scope.ScopeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -50,8 +52,14 @@ class DetailActivity : ScopeActivity() {
         val movie = model.movie
         movieDetailToolbar.title = movie.title
         movieDetailImage.loadUrlAndPostponeEnterTransition(movie.getFullPosterPath(780), this@DetailActivity)
-        movieDetailSummary.text = movie.overview
-        movieDetailInfo.setMovie(movie)
+
+        movieTitle.text = movie.title
+        rtStar.rating = movie.get5StarRating()
+        movieStar.text = movie.get5StarRating().toString()
+        movieGenres.text = movie.getGenresDisplay()
+        movieDuration.text = movie.getDurationDisplay()
+        movieDate.text = movie.releaseDate
+        overviewContent.text = movie.overview
 
         val icon = if (model.isFavorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
         movieDetailFavorite.setImageDrawable(ContextCompat.getDrawable(this@DetailActivity, icon))

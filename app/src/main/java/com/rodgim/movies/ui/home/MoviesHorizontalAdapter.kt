@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rodgim.entities.Movie
 import com.rodgim.movies.databinding.ViewMovieHorizontalBinding
 import com.rodgim.movies.ui.common.loadUrl
+import com.rodgim.movies.ui.models.getFullPosterPath
 
 class MoviesHorizontalAdapter(private val listener: (Movie, ImageView) -> Unit) :
     ListAdapter<Movie, MoviesHorizontalAdapter.ViewHolder>(MoviesHorizontalDiffCallback()) {

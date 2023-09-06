@@ -19,7 +19,11 @@ class MoviesRepository(
         return localDataSource.getMoviesFromCategory(category)
     }
 
-    suspend fun findMovieById(id: Int): Movie = localDataSource.findMovieById(id)
+    suspend fun findMovieById(id: Int): Movie {
+        val movie = remoteDataSource.getMovieDetail(id, apiKey)
+        localDataSource.updateMovie(movie)
+        return localDataSource.findMovieById(id)
+    }
 
     suspend fun updateMovie(movie: Movie) = localDataSource.updateMovie(movie)
 

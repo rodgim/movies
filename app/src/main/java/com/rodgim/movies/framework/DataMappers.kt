@@ -1,7 +1,9 @@
 package com.rodgim.movies.framework
 
+import com.rodgim.entities.Genre
 import com.rodgim.entities.Movie
 import com.rodgim.movies.framework.database.Movie as DbMovie
+import com.rodgim.movies.framework.server.Genre as ServerGenre
 import com.rodgim.movies.framework.server.Movie as ServerMovie
 
 fun Movie.toRoomMovie(): DbMovie =
@@ -51,6 +53,12 @@ fun ServerMovie.toDomainMovie(): Movie =
         popularity = popularity,
         voteAverage = voteAverage,
         isFavorite = false,
-        genres = emptyList(),
-        duration = 0
+        genres = genres?.map { it.toDomainGenre() } ?: emptyList(),
+        duration = runtime ?: 0
+    )
+
+fun ServerGenre.toDomainGenre(): Genre =
+    Genre(
+        id = id,
+        name = name
     )
