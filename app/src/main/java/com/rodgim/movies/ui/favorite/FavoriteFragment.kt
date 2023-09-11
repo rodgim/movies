@@ -8,7 +8,10 @@ import android.widget.ImageView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.rodgim.entities.Movie
+import com.rodgim.movies.R
 import com.rodgim.movies.databinding.FragmentFavoriteBinding
 import com.rodgim.movies.ui.common.startActivity
 import com.rodgim.movies.ui.detail.DetailActivity
@@ -46,9 +49,18 @@ class FavoriteFragment : ScopeFragment() {
 
     private fun setupRecyclerView() {
         binding.apply {
+            rvFavorite.addItemDecoration(getItemDecoration())
             favoriteAdapter = FavoriteAdapter(::movieClicked)
             rvFavorite.adapter = favoriteAdapter
         }
+    }
+
+    private fun getItemDecoration(): MaterialDividerItemDecoration {
+        val itemDecoration = MaterialDividerItemDecoration(requireContext(), VERTICAL)
+        itemDecoration.isLastItemDecorated = false
+        itemDecoration.setDividerColorResource(requireContext(), R.color.white)
+        itemDecoration.setDividerThicknessResource(requireContext(), R.dimen.divider)
+        return itemDecoration
     }
 
     private fun movieClicked(movie: Movie, view: ImageView) {
