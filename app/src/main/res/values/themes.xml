@@ -36,12 +36,17 @@
         <item name="itemActiveIndicatorStyle">@style/Custom.Indicator</item>
     </style>
 
-    <style name="RoundedImageView">
+    <style name="TopRoundedImageView">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeBottomLeft">0dp</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeTopLeft">8dp</item>
         <item name="cornerSizeTopRight">8dp</item>
+    </style>
+
+    <style name="RoundedImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 
     <style name="Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">

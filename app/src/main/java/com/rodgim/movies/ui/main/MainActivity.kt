@@ -11,8 +11,6 @@ import org.koin.androidx.scope.ScopeActivity
 
 class MainActivity : ScopeActivity() {
     private lateinit var binding: ActivityMainBinding
-
-    private lateinit var appBarConfig: AppBarConfiguration
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {

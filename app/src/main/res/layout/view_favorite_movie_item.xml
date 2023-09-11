@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:padding="16dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/moviePoster"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/poster"
+        android:transitionName="@string/transition_poster"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        tools:src="@tools:sample/backgrounds/scenic"/>
+
+    <TextView
+        android:id="@+id/movieTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/moviePoster"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Spider-man"/>
+
+    <TextView
+        android:id="@+id/movieDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/primaryLightColor"
+        app:layout_constraintStart_toEndOf="@id/moviePoster"
+        app:layout_constraintTop_toBottomOf="@id/movieTitle"
+        tools:text="2020-10-10"/>
+
+    <TextView
+        android:id="@+id/movieGenres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/moviePoster"
+        app:layout_constraintTop_toBottomOf="@id/movieDate"
+        tools:text="Comedy, Horror"/>
+
+    <RatingBar
+        android:id="@+id/rtStar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:numStars="5"
+        android:progressTint="@color/yellow"
+        app:layout_constraintStart_toEndOf="@id/moviePoster"
+        app:layout_constraintTop_toBottomOf="@id/movieGenres"/>
+
+    <TextView
+        android:id="@+id/movieStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/rtStar"
+        app:layout_constraintTop_toTopOf="@id/rtStar"
+        app:layout_constraintBottom_toBottomOf="@id/rtStar"
+        tools:text="3.50"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

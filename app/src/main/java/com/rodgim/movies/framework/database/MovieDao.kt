@@ -30,7 +30,7 @@ interface MovieDao {
     suspend fun isMovieFavorite(id: Int): Boolean
 
     @Query("SELECT * FROM Movie WHERE isFavorite == 1")
-    fun getFavoriteMovies(): List<Movie>
+    suspend fun getFavoriteMovies(): List<Movie>
 
     @Query(
         """

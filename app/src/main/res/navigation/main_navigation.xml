@@ -10,4 +10,10 @@
         android:name="com.rodgim.movies.ui.home.MoviesFragment"
         android:label="MoviesFragment"
         tools:layout="@layout/fragment_movies"/>
+
+    <fragment
+        android:id="@+id/menu_favorite"
+        android:name="com.rodgim.movies.ui.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite"/>
 </navigation>

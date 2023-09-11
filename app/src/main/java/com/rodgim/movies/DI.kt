@@ -16,10 +16,13 @@ import com.rodgim.movies.framework.server.RetrofitModule
 import com.rodgim.movies.framework.server.ServerMovieDataSource
 import com.rodgim.movies.ui.detail.DetailActivity
 import com.rodgim.movies.ui.detail.DetailViewModel
+import com.rodgim.movies.ui.favorite.FavoriteFragment
+import com.rodgim.movies.ui.favorite.FavoriteViewModel
 import com.rodgim.movies.ui.home.MoviesFragment
 import com.rodgim.movies.ui.home.MoviesViewModel
 import com.rodgim.usecases.CheckIfMovieIsFavorite
 import com.rodgim.usecases.FindMovieById
+import com.rodgim.usecases.GetFavoriteMovies
 import com.rodgim.usecases.GetMoviesFromCategory
 import com.rodgim.usecases.ToggleMovieFavorite
 import kotlinx.coroutines.CoroutineDispatcher
@@ -71,6 +74,10 @@ private val scopesModule = module {
     scope(named<MoviesFragment>()) {
         viewModel { MoviesViewModel(get(), get()) }
         scoped { GetMoviesFromCategory(get()) }
+    }
+    scope(named<FavoriteFragment>()) {
+        viewModel { FavoriteViewModel(get(), get()) }
+        scoped { GetFavoriteMovies(get()) }
     }
 }
 

@@ -28,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/RoundedImageView"
+            app:shapeAppearanceOverlay="@style/TopRoundedImageView"
             tools:src="@tools:sample/backgrounds/scenic"/>
 
         <TextView
