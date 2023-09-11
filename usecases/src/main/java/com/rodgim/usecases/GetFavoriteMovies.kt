@@ -4,5 +4,5 @@ import com.rodgim.data.repository.MoviesRepository
 import com.rodgim.entities.Movie
 
 class GetFavoriteMovies(private val moviesRepository: MoviesRepository) {
-    suspend fun invoke(): List<Movie> = moviesRepository.getFavoriteMovies()
+    suspend operator fun invoke(): List<Movie> = moviesRepository.getFavoriteMovies()
 }

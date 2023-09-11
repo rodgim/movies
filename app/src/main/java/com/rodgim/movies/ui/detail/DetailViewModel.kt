@@ -28,14 +28,14 @@ class DetailViewModel(
         }
 
     private fun findMovie() = launch {
-        val movie = findMovieById.invoke(movieId)
-        val isMovieFavorite = checkIfMovieIsFavorite.invoke(movieId)
+        val movie = findMovieById(movieId)
+        val isMovieFavorite = checkIfMovieIsFavorite(movieId)
         _model.value = UiModel(movie, isMovieFavorite)
     }
 
     fun onFavoriteClicked() = launch {
         _model.value?.movie?.let {
-            _model.value = UiModel(it, toggleMovieFavorite.invoke(it))
+            _model.value = UiModel(it, toggleMovieFavorite(it))
         }
     }
 }

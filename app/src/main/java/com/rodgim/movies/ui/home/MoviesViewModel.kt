@@ -33,9 +33,9 @@ class MoviesViewModel(
     fun onCoarsePermissionRequested() {
         launch {
             _model.value = UiModel.Loading
-            val popular = async { getMoviesFromCategory.invoke(CategoryMovie.POPULAR.id) }
-            val nowPlaying = async { getMoviesFromCategory.invoke(CategoryMovie.NOW_PLAYING.id) }
-            val topRated = async { getMoviesFromCategory.invoke(CategoryMovie.TOP_RATED.id) }
+            val popular = async { getMoviesFromCategory(CategoryMovie.POPULAR.id) }
+            val nowPlaying = async { getMoviesFromCategory(CategoryMovie.NOW_PLAYING.id) }
+            val topRated = async { getMoviesFromCategory(CategoryMovie.TOP_RATED.id) }
 
             val defPopular = popular.await()
             val defNowPlaying = nowPlaying.await()

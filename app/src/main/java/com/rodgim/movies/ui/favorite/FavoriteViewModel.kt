@@ -27,7 +27,7 @@ class FavoriteViewModel(
     private fun getData() {
         launch {
             _model.value = UiModel.Loading
-            val result = getFavoriteMovies.invoke()
+            val result = getFavoriteMovies()
             _model.value = UiModel.Content(result)
         }
     }
