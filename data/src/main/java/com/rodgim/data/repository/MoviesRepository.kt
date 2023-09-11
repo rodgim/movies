@@ -21,7 +21,8 @@ class MoviesRepository(
 
     suspend fun findMovieById(id: Int): Movie {
         val movie = remoteDataSource.getMovieDetail(id, apiKey)
-        localDataSource.updateMovie(movie)
+        val isMovieFavorite = isMovieFavorite(id)
+        localDataSource.updateMovie(movie.copy(isFavorite = isMovieFavorite))
         return localDataSource.findMovieById(id)
     }
 
