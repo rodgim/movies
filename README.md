@@ -4,9 +4,9 @@ Movies is a sample Android project using <a href="https://www.themoviedb.org/">T
 ## Features
 * 100% Kotlin
 * MVVM architecture
-* Android Architecture Components and Jetpack Compose.
+* Android Architecture Components.
 * Dependency injection
-* Kotlin Coroutines + Flow
+* Kotlin Coroutines + LiveData
 * Testing
 
 ## Tech Stacks
@@ -18,7 +18,6 @@ Movies is a sample Android project using <a href="https://www.themoviedb.org/">T
     * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata) - Observable data holder that notify views when underlying data changes.
     * [Navigation component](https://developer.android.com/guide/navigation) - Fragment routing handler.
 * [Coroutine](https://developer.android.com/kotlin/coroutines) Concurrency design pattern for asynchronous programming.
-* [Flow](https://developer.android.com/kotlin/flow) Stream of value that returns from suspend function.
 * [Glide](https://github.com/bumptech/glide) - Image loading.
 
 ## Setup project
