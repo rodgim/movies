@@ -66,7 +66,7 @@ class MoviesFragment : ScopeFragment() {
 
     private fun movieClicked(movie: Movie, view: ImageView) {
         movieViewClicked = view
-        viewModel.onMovieClicked(movie)
+        navigateToDetail(movie)
     }
 
     private fun updateUi(model: MoviesViewModel.UiModel) {
@@ -84,14 +84,6 @@ class MoviesFragment : ScopeFragment() {
                 hideShimmer(binding.nowPlayingShimmerContainer)
                 hideShimmer(binding.topRatedShimmerContainer)
             }
-            is MoviesViewModel.UiModel.Navigation -> {
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    requireActivity(), movieViewClicked, movieViewClicked.transitionName
-                )
-                requireActivity().startActivity<DetailActivity>(options.toBundle()) {
-                    putExtra(DetailActivity.MOVIE, model.movie.id)
-                }
-            }
             is MoviesViewModel.UiModel.RequestLocationPermission -> coarsePermissionRequester.request {
                 viewModel.onCoarsePermissionRequested()
             }
@@ -101,5 +93,14 @@ class MoviesFragment : ScopeFragment() {
     private fun hideShimmer(container: ShimmerFrameLayout) {
         container.hideShimmer()
         container.visibility = View.GONE
+    }
+
+    private fun navigateToDetail(movie: Movie) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            requireActivity(), movieViewClicked, movieViewClicked.transitionName
+        )
+        requireActivity().startActivity<DetailActivity>(options.toBundle()) {
+            putExtra(DetailActivity.MOVIE, movie.id)
+        }
     }
 }

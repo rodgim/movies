@@ -45,19 +45,14 @@ class MoviesViewModel(
         }
     }
 
-    fun onMovieClicked(movie: Movie) {
-        _model.value = UiModel.Navigation(movie)
-    }
-
     override fun onCleared() {
         destroyScope()
         super.onCleared()
     }
 
     sealed class UiModel {
-        object Loading: UiModel()
+        data object Loading: UiModel()
         data class Content(val popular: List<Movie>, val nowPlaying: List<Movie>, val topRated: List<Movie>): UiModel()
-        data class Navigation(val movie: Movie) : UiModel()
-        object RequestLocationPermission : UiModel()
+        data object RequestLocationPermission : UiModel()
     }
 }

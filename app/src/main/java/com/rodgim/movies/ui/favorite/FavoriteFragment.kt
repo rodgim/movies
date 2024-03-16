@@ -65,7 +65,7 @@ class FavoriteFragment : ScopeFragment() {
 
     private fun movieClicked(movie: Movie, view: ImageView) {
         movieViewClicked = view
-        viewModel.onMovieClicked(movie)
+        navigateToDetail(movie)
     }
 
     private fun updateUi(model: FavoriteViewModel.UiModel) {
@@ -77,14 +77,15 @@ class FavoriteFragment : ScopeFragment() {
                 hideProgressBar()
                 favoriteAdapter.submitList(model.favorites)
             }
-            is FavoriteViewModel.UiModel.Navigation -> {
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    requireActivity(), movieViewClicked, movieViewClicked.transitionName
-                )
-                requireActivity().startActivity<DetailActivity>(options.toBundle()) {
-                    putExtra(DetailActivity.MOVIE, model.movie.id)
-                }
-            }
+        }
+    }
+
+    private fun navigateToDetail(movie: Movie) {
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            requireActivity(), movieViewClicked, movieViewClicked.transitionName
+        )
+        requireActivity().startActivity<DetailActivity>(options.toBundle()) {
+            putExtra(DetailActivity.MOVIE, movie.id)
         }
     }
 
