@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="divider">8dp</dimen>
+
+    <dimen name="margin_0_dp">0dp</dimen>
+    <dimen name="margin_8_dp">8dp</dimen>
+    <dimen name="margin_16_dp">16dp</dimen>
+
+    <dimen name="hint_shadow">7dp</dimen>
+    <dimen name="hint_bubble_border">3dp</dimen>
+    <dimen name="hint_arrow_width">40dp</dimen>
+    <dimen name="hint_arrow_height">20dp</dimen>
+    <dimen name="hint_corner_radius">10dp</dimen>
 </resources>

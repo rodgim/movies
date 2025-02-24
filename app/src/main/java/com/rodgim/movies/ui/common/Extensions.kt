@@ -61,6 +61,34 @@ fun View.cancelTransition() {
     transitionName = null
 }
 
+fun View.setMargins(
+    left: Int? = null,
+    top: Int? = null,
+    right: Int? = null,
+    bottom: Int? = null
+) {
+    val lp = layoutParams as? ViewGroup.MarginLayoutParams
+        ?: return
+
+    lp.setMargins(
+        left ?: lp.leftMargin,
+        top ?: lp.topMargin,
+        right ?: lp.rightMargin,
+        bottom ?: lp.rightMargin
+    )
+
+    layoutParams = lp
+}
+
+fun View.getStatusBarHeight(): Int {
+    var result = 0
+    val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0) {
+        result = context.resources.getDimensionPixelSize(resourceId)
+    }
+    return result
+}
+
 inline fun <reified T: Activity> Context.intentFor(body: Intent.() -> Unit): Intent =
     Intent(this, T::class.java).apply(body)
 

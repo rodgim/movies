@@ -13,4 +13,6 @@
     <color name="yellow">#FFFF00</color>
 
     <color name="lightBackground">#E0E0E0</color>
+
+    <color name="delivered">#50AFE4</color>
 </resources>

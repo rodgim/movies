@@ -32,7 +32,7 @@ shimmer = "0.5.0"
 swiperefreshlayout = "1.1.0"
 viewpager2 = "1.1.0"
 
-androidGradlePlugin = "8.8.0"
+androidGradlePlugin = "8.8.1"
 devToolsKspVersion = "2.0.0-1.0.24"
 kotlinAndroid = "2.0.0"
 
