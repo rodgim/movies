@@ -38,16 +38,34 @@ class FakeLocalDataSource : LocalDataSource {
 
     override suspend fun isEmpty() = movies.isEmpty()
 
-    override suspend fun saveMovies(movies: List<Movie>) {
+    override suspend fun isCategoryEmpty(category: String): Boolean {
+        return false
+    }
+
+    override suspend fun saveMovies(movies: List<Movie>, category: String) {
         this.movies = movies
     }
 
-    override suspend fun getPopularMovies(): List<Movie> = movies
+    override suspend fun getMoviesFromCategory(category: String): List<Movie> {
+        return movies
+    }
 
     override suspend fun findMovieById(id: Int): Movie = movies.first { it.id == id }
 
     override suspend fun updateMovie(movie: Movie) {
         movies = movies.filterNot { it.id == movie.id } + movie
+    }
+
+    override suspend fun getFavoriteMovies(): List<Movie> {
+        return movies
+    }
+
+    override suspend fun toggleFavoriteMovie(movie: Movie) {
+        movies = movies.filterNot { it.id == movie.id } + movie.copy(isFavorite = !movie.isFavorite)
+    }
+
+    override suspend fun isMovieFavorite(id: Int): Boolean {
+        return movies.first { it.id == id }.isFavorite
     }
 }
 
@@ -55,8 +73,17 @@ class FakeRemoteDataSource : RemoteDataSource {
 
     var movies = defaultFakeMovies
 
-    override suspend fun getPopularMovies(apikey: String, region: String): List<Movie> = movies
+    override suspend fun getMoviesFromCategory(
+        category: String,
+        region: String,
+        apikey: String
+    ): List<Movie> {
+        return movies
+    }
 
+    override suspend fun getMovieDetail(movieId: Int, apikey: String): Movie {
+        return movies.first{ it.id == movieId}
+    }
 }
 
 class FakeLocationDataSource : LocationDataSource {
