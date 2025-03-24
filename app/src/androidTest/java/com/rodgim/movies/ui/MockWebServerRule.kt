@@ -1,6 +1,9 @@
 package com.rodgim.movies.ui
 
+import okhttp3.mockwebserver.Dispatcher
+import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
@@ -13,14 +16,54 @@ class MockWebServerRule : TestRule {
 
     val server = MockWebServer()
 
+    private val dispatcher = object : Dispatcher() {
+        override fun dispatch(request: RecordedRequest): MockResponse {
+            return when {
+                request.path?.startsWith("/movie/popular") == true ->
+                    MockResponse()
+                        .setResponseCode(200)
+                        .setBody(readJsonFile("popular_movies.json"))
+
+                request.path?.startsWith("/movie/top_rated") == true ->
+                    MockResponse()
+                        .setResponseCode(200)
+                        .setBody(readJsonFile("top_rated_movies.json"))
+
+                request.path?.startsWith("/movie/now_playing") == true ->
+                    MockResponse()
+                        .setResponseCode(200)
+                        .setBody(readJsonFile("now_playing.json"))
+
+                request.path?.startsWith("/movie/") == true -> {
+                    val basePath = request.path?.substringBefore("?")
+                    val movieId = basePath?.split("/")?.last()
+                    MockResponse().setBody(readJsonFile("movie_details_$movieId.json"))
+                }
+
+                else -> MockResponse().setResponseCode(404)
+            }
+        }
+    }
+
+    private fun readJsonFile(filename: String): String {
+        return this::class.java.classLoader
+            ?.getResourceAsStream(filename)
+            ?.bufferedReader()
+            ?.use { it.readText() }
+            ?: throw IllegalArgumentException("File not found: $filename")
+    }
+
     override fun apply(base: Statement, description: Description) = object : Statement() {
         override fun evaluate() {
+            server.dispatcher = dispatcher
             server.start()
             replaceBaseUrl()
 
-            base.evaluate()
-
-            server.shutdown()
+            try {
+                base.evaluate()
+            } finally {
+                server.shutdown()
+            }
         }
     }
 
