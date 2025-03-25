@@ -9,6 +9,7 @@ import com.rodgim.movies.defaultFakeMovies
 import com.rodgim.movies.initMockedDi
 import com.rodgim.movies.mockedMovie
 import com.rodgim.movies.ui.home.MoviesViewModel
+import com.rodgim.usecases.GetMoviesFromCategory
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,7 +35,7 @@ class MainIntegrationTests : AutoCloseKoinTest() {
     fun setUp() {
         val vmModule = module {
             factory { MoviesViewModel(get(), get()) }
-            factory { GetPopularMovies(get()) }
+            factory { GetMoviesFromCategory(get()) }
         }
 
         initMockedDi(vmModule)
@@ -47,18 +48,19 @@ class MainIntegrationTests : AutoCloseKoinTest() {
 
         vm.onCoarsePermissionRequested()
 
-        verify(observer).onChanged(MoviesViewModel.UiModel.Content(defaultFakeMovies))
+        verify(observer).onChanged(MoviesViewModel.UiModel.Content(defaultFakeMovies, defaultFakeMovies, defaultFakeMovies))
     }
 
     @Test
     fun `data is loaded from local source when available`() {
         val fakeLocalMovies = listOf(mockedMovie.copy(10), mockedMovie.copy(11))
         val localDataSource = get<LocalDataSource>() as FakeLocalDataSource
+        localDataSource.isCategoryLoadedWithMovies = true
         localDataSource.movies = fakeLocalMovies
         vm.model.observeForever(observer)
 
         vm.onCoarsePermissionRequested()
 
-        verify(observer).onChanged(MoviesViewModel.UiModel.Content(fakeLocalMovies))
+        verify(observer).onChanged(MoviesViewModel.UiModel.Content(fakeLocalMovies, fakeLocalMovies, fakeLocalMovies))
     }
 }

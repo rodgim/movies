@@ -5,6 +5,7 @@ import com.rodgim.data.source.LocalDataSource
 import com.rodgim.data.source.LocationDataSource
 import com.rodgim.data.source.RemoteDataSource
 import com.rodgim.entities.Movie
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -24,6 +25,7 @@ private val mockedAppModule = module {
     single<LocationDataSource> { FakeLocationDataSource() }
     single<PermissionChecker> { FakePermissionChecker() }
     single { Dispatchers.Unconfined }
+    single<CoroutineDispatcher>(named("ioDispatcher")) { Dispatchers.Unconfined }
 }
 
 val defaultFakeMovies = listOf(
@@ -35,11 +37,12 @@ val defaultFakeMovies = listOf(
 
 class FakeLocalDataSource : LocalDataSource {
     var movies: List<Movie> = emptyList()
+    var isCategoryLoadedWithMovies = false
 
     override suspend fun isEmpty() = movies.isEmpty()
 
     override suspend fun isCategoryEmpty(category: String): Boolean {
-        return false
+        return !isCategoryLoadedWithMovies
     }
 
     override suspend fun saveMovies(movies: List<Movie>, category: String) {
@@ -61,7 +64,7 @@ class FakeLocalDataSource : LocalDataSource {
     }
 
     override suspend fun toggleFavoriteMovie(movie: Movie) {
-        movies = movies.filterNot { it.id == movie.id } + movie.copy(isFavorite = !movie.isFavorite)
+        movies = movies.filterNot { it.id == movie.id } + movie
     }
 
     override suspend fun isMovieFavorite(id: Int): Boolean {

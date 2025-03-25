@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.rodgim.movies.mockedMovie
+import com.rodgim.usecases.CheckIfMovieIsFavorite
 import com.rodgim.usecases.FindMovieById
 import com.rodgim.usecases.ToggleMovieFavorite
 import kotlinx.coroutines.Dispatchers
@@ -31,11 +32,14 @@ class DetailViewModelTest {
     @Mock
     lateinit var observer: Observer<DetailViewModel.UiModel>
 
+    @Mock
+    lateinit var checkIfMovieIsFavorite: CheckIfMovieIsFavorite
+
     private lateinit var vm: DetailViewModel
 
     @Before
     fun setUp() {
-        vm = DetailViewModel(1, findMovieById, toggleMovieFavorite, Dispatchers.Unconfined)
+        vm = DetailViewModel(1, findMovieById, toggleMovieFavorite, checkIfMovieIsFavorite, Dispatchers.Unconfined)
     }
 
     @Test
@@ -43,10 +47,11 @@ class DetailViewModelTest {
         runBlocking {
             val movie = mockedMovie.copy(id = 1)
             whenever(findMovieById.invoke(1)).thenReturn(movie)
+            whenever(checkIfMovieIsFavorite.invoke(1)).thenReturn(false)
 
             vm.model.observeForever(observer)
 
-            verify(observer).onChanged(DetailViewModel.UiModel(movie))
+            verify(observer).onChanged(DetailViewModel.UiModel(movie, false))
         }
     }
 
@@ -55,7 +60,8 @@ class DetailViewModelTest {
         runBlocking {
             val movie = mockedMovie.copy(id = 1)
             whenever(findMovieById.invoke(1)).thenReturn(movie)
-            whenever(toggleMovieFavorite.invoke(movie)).thenReturn(movie.copy(favorite = !movie.favorite))
+            whenever(checkIfMovieIsFavorite.invoke(1)).thenReturn(false)
+            whenever(toggleMovieFavorite.invoke(movie)).thenReturn(!movie.isFavorite)
             vm.model.observeForever(observer)
 
             vm.onFavoriteClicked()

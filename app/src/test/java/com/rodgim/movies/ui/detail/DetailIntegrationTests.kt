@@ -8,6 +8,7 @@ import com.rodgim.movies.FakeLocalDataSource
 import com.rodgim.movies.defaultFakeMovies
 import com.rodgim.movies.initMockedDi
 import com.rodgim.movies.mockedMovie
+import com.rodgim.usecases.CheckIfMovieIsFavorite
 import com.rodgim.usecases.FindMovieById
 import com.rodgim.usecases.ToggleMovieFavorite
 import kotlinx.coroutines.runBlocking
@@ -38,9 +39,10 @@ class DetailIntegrationTests : AutoCloseKoinTest() {
     @Before
     fun setUp() {
         val vmModule = module {
-            factory { (id: Int) -> DetailViewModel(id, get(), get(), get()) }
+            factory { (id: Int) -> DetailViewModel(id, get(), get(), get(), get()) }
             factory { FindMovieById(get()) }
             factory { ToggleMovieFavorite(get()) }
+            factory { CheckIfMovieIsFavorite(get()) }
         }
 
         initMockedDi(vmModule)
@@ -54,7 +56,7 @@ class DetailIntegrationTests : AutoCloseKoinTest() {
     fun `observing LiveData finds the movie`() {
         vm.model.observeForever(observer)
 
-        verify(observer).onChanged(DetailViewModel.UiModel(mockedMovie.copy(1)))
+        verify(observer).onChanged(DetailViewModel.UiModel(mockedMovie.copy(1), false))
     }
 
     @Test
@@ -64,7 +66,8 @@ class DetailIntegrationTests : AutoCloseKoinTest() {
         vm.onFavoriteClicked()
 
         runBlocking {
-            assertTrue(localDataSource.findMovieById(1).favorite)
+            println("isfavorite=${localDataSource.findMovieById(1).isFavorite}")
+            assertTrue(localDataSource.findMovieById(1).isFavorite)
         }
     }
 }
