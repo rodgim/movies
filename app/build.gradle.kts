@@ -122,4 +122,7 @@ dependencies {
     androidTestImplementation(libs.okhttp3.idling.resource)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.androidx.espresso.idling.resource)
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 }

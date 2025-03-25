@@ -49,19 +49,20 @@ fun Application.initDI() {
 
 private val appModule = module {
     single(named("apiKey")) { BuildConfig.TMDB_API_KEY}
-    single{ MovieDatabase.build(get())}
+    single<MovieDatabase>{ MovieDatabase.build(get())}
     factory<LocalDataSource> { RoomDataSource(get()) }
     factory<RemoteDataSource> { ServerMovieDataSource(get()) }
     factory<LocationDataSource> { PlayServicesLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
+    single<CoroutineDispatcher>(named("ioDispatcher")) { Dispatchers.IO }
     single(named("baseUrl")) { BuildConfig.TMDB_BASE_URL }
     single { RetrofitModule(get(named("baseUrl"))) }
 }
 
 val dataModule = module {
     factory { RegionRepository(get(), get()) }
-    factory { MoviesRepository(get(), get(), get(), get(named("apiKey"))) }
+    factory { MoviesRepository(get(), get(), get(), get(named("apiKey")), get(named("ioDispatcher"))) }
 }
 
 private val scopesModule = module {

@@ -1,11 +1,15 @@
 package com.rodgim.movies.ui
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
@@ -17,6 +21,8 @@ import com.jakewharton.espresso.OkHttp3IdlingResource
 import com.rodgim.movies.R
 import com.rodgim.movies.framework.server.RetrofitModule
 import com.rodgim.movies.ui.main.MainActivity
+import org.hamcrest.Matcher
+import org.hamcrest.Matchers.any
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -51,9 +57,8 @@ class UiTest : KoinTest {
     fun clickAMovieNavigatesToDetail() {
         ActivityScenario.launch(MainActivity::class.java)
 
-        Thread.sleep(500)
-
-        onView(withId(R.id.rvPopular)).check(matches(hasMinimumChildCount(3)))
+        onView(withId(R.id.rvPopular))
+            .perform(waitUntilViewMatches(hasMinimumChildCount(3), 5000))
 
         onView(withId(R.id.rvPopular)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
@@ -70,5 +75,33 @@ class UiTest : KoinTest {
     @After
     fun tearDown() {
         IdlingRegistry.getInstance().unregister(resource)
+    }
+
+    private fun waitUntilViewMatches(
+        matcher: Matcher<View>,
+        timeoutInMillis: Long = 5000L,
+        intervalInMillis: Long = 50L
+    ): ViewAction {
+        return object : ViewAction {
+            override fun getConstraints() = any(View::class.java)
+            override fun getDescription() = "Wait for view to match $matcher for $timeoutInMillis ms"
+
+            override fun perform(uiController: UiController, view: View) {
+                val endTime = System.currentTimeMillis() + timeoutInMillis
+
+                do {
+                    try {
+                        ViewAssertions.matches(matcher).check(view, null)
+                        return
+                    } catch (e: AssertionError) {
+                        Thread.sleep(50)
+                    }
+
+                    uiController.loopMainThreadForAtLeast(intervalInMillis)
+                } while (System.currentTimeMillis() < endTime)
+
+                ViewAssertions.matches(matcher).check(view, null)
+            }
+        }
     }
 }

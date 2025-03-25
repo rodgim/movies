@@ -2,6 +2,7 @@ package com.rodgim.movies.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.rodgim.entities.Movie
 import com.rodgim.movies.ui.common.ScopedViewModel
 import com.rodgim.movies.ui.models.CategoryMovie
@@ -31,8 +32,9 @@ class MoviesViewModel(
     }
 
     fun onCoarsePermissionRequested() {
-        launch {
+        viewModelScope.launch(uiDispatcher) {
             _model.value = UiModel.Loading
+
             val popular = async { getMoviesFromCategory(CategoryMovie.POPULAR.id) }
             val nowPlaying = async { getMoviesFromCategory(CategoryMovie.NOW_PLAYING.id) }
             val topRated = async { getMoviesFromCategory(CategoryMovie.TOP_RATED.id) }
